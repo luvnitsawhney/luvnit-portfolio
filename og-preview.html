@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>OG Image Preview — 1200×630</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #000;
+    font-family: "Geist Mono", ui-monospace, "Courier New", monospace;
+    color: #fff;
+  }
+
+  .frame {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* ASCII noise background */
+  .ascii-bg {
+    position: absolute;
+    inset: 0;
+    font-size: 9px;
+    line-height: 9px;
+    letter-spacing: 0.35em;
+    white-space: pre;
+    color: #fff;
+    opacity: 0.07;
+    font-weight: 700;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .top {
+    position: relative;
+    z-index: 1;
+  }
+
+  .name {
+    font-size: 86px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    margin-bottom: 20px;
+  }
+
+  .role {
+    font-size: 18px;
+    opacity: 0.45;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+  }
+
+  .bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .stats {
+    display: flex;
+    gap: 56px;
+  }
+
+  .stat-num {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    opacity: 0.35;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .domain {
+    font-size: 16px;
+    opacity: 0.35;
+    letter-spacing: 0.06em;
+  }
+
+  /* Right-side decorative bar */
+  .accent-bar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #fff;
+    opacity: 0.12;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- ASCII noise background -->
+  <div class="ascii-bg" id="asciiBg"></div>
+
+  <div class="accent-bar"></div>
+
+  <div class="top">
+    <div class="name">Luvnit<br>Sawhney</div>
+    <div class="role">Head of Design · Amazon Pay · L7</div>
+  </div>
+
+  <div class="bottom">
+    <div class="stats">
+      <div>
+        <div class="stat-num">20M+</div>
+        <div class="stat-label">Users touched</div>
+      </div>
+      <div>
+        <div class="stat-num">100K</div>
+        <div class="stat-label">DAUs</div>
+      </div>
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Years</div>
+      </div>
+      <div>
+        <div class="stat-num">3×</div>
+        <div class="stat-label">0→1 products</div>
+      </div>
+    </div>
+    <div class="domain">luvnit.co</div>
+  </div>
+</div>
+
+<script>
+  // Generate ASCII noise fill
+  const chars = ['L','U','V','N','I','T','~',':','-','·',' ',' ',' '];
+  const cols = Math.ceil(1200 / 6.5);
+  const rows = Math.ceil(630 / 9);
+  let out = '';
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      // Fade to empty at edges
+      const edgeFade = Math.min(c / 8, (cols - c) / 8, r / 4, (rows - r) / 4, 1);
+      const roll = Math.random();
+      if (roll > edgeFade * 0.55) {
+        out += ' ';
+      } else {
+        out += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    out += '\n';
+  }
+  document.getElementById('asciiBg').textContent = out;
+</script>
+
+<!--
+  HOW TO SAVE AS og.png
+  ─────────────────────
+  1. Open this file in Chrome
+  2. Set browser zoom to 100%
+  3. Open DevTools → toggle Device Toolbar (Cmd+Shift+M)
+  4. Set dimensions to 1200 × 630
+  5. Right-click the page → "Capture screenshot"
+  6. Save as og.png in this folder
+-->
+</body>
+</html>

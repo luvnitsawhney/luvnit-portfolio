@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Luvnit Sawhney — Design Leader</title>
+  <meta name="description" content="Head of Design at Amazon Pay. 12 years turning hard product problems into things people love — at scale." />
+  <meta property="og:title" content="Luvnit Sawhney — Design Leader" />
+  <meta property="og:description" content="Head of Design at Amazon Pay. 110M+ UPI users. Fintech, payments, consumer apps." />
+  <meta property="og:image" content="https://luvnit.co/og.png" />
+  <meta property="og:url" content="https://luvnit.co" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Luvnit Sawhney — Design Leader" />
+  <meta name="twitter:description" content="Head of Design at Amazon Pay. 110M+ UPI users." />
+  <meta name="twitter:image" content="https://luvnit.co/og.png" />
+  <meta name="twitter:site" content="@Luvnits" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --cell-size: 8px; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: "Geist Mono", ui-monospace, "Courier New", monospace;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    canvas {
+      position: fixed; top: 0; left: 0;
+      z-index: 0; opacity: 0; pointer-events: none;
+    }
+
+    .render {
+      position: fixed; top: 0; left: 0;
+      white-space: pre;
+      letter-spacing: 0.4em;
+      font-size: var(--cell-size);
+      line-height: var(--cell-size);
+      font-weight: 700;
+      color: #fff; opacity: 0.45;
+      z-index: 1; pointer-events: none;
+    }
+
+    #drag-layer {
+      position: fixed; inset: 0;
+      z-index: 5; cursor: crosshair;
+    }
+
+    /* ── Header ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 20;
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+    }
+
+    .hero-text { pointer-events: all; }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .hero-text p {
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      opacity: 0.55; margin-top: 10px; letter-spacing: 0.02em;
+    }
+
+    nav {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 6px;
+      pointer-events: all;
+    }
+
+    nav a {
+      color: #fff; text-decoration: none;
+      font-size: clamp(0.8rem, 1.3vw, 1rem);
+      font-weight: 500; cursor: pointer; opacity: 0.8;
+      transition: opacity 0.15s; letter-spacing: 0.02em;
+      display: block; padding: 2px 0;
+    }
+
+    nav a:hover { opacity: 1; }
+
+    /* ── Overlay ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+      z-index: 30; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active { opacity: 1; pointer-events: all; }
+
+    /* ── Bottom Sheet Drawer ── */
+    .drawer {
+      position: fixed; bottom: -100%; left: 0; right: 0;
+      background: #0d0d0d;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px 20px 0 0;
+      z-index: 40;
+      transition: bottom 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+      max-height: 80vh; overflow-y: auto; scrollbar-width: none;
+    }
+
+    .drawer::-webkit-scrollbar { display: none; }
+    .drawer.open { bottom: 0; }
+
+    .drawer-inner { padding: 0 48px 48px; }
+
+    .drawer-handle {
+      width: 36px; height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px; margin: 14px auto 0;
+    }
+
+    .drawer-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 28px 0 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 32px;
+    }
+
+    .drawer-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+
+    .drawer-close {
+      cursor: pointer; font-size: 1rem; opacity: 0.4;
+      background: none; border: none; color: #fff;
+      font-family: inherit; transition: opacity 0.15s; padding: 4px 0;
+    }
+
+    .drawer-close:hover { opacity: 0.8; }
+
+    .section-label {
+      font-size: 0.65rem; opacity: 0.35;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    /* ── Card grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px; margin-bottom: 40px;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+      padding: 20px 22px; cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      text-decoration: none; color: #fff; display: block;
+    }
+
+    .card:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+
+    .card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .card-desc { font-size: 0.75rem; opacity: 0.5; line-height: 1.6; }
+    .card-link { font-size: 0.68rem; opacity: 0.3; margin-top: 14px; letter-spacing: 0.04em; }
+
+    /* ── About section ── */
+    .about-body { max-width: 700px; }
+
+    .about-lead {
+      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+      line-height: 1.85; opacity: 0.85; margin-bottom: 36px;
+    }
+
+    /* Amazon Pay featured block */
+    .exp-featured {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 24px 28px;
+      margin-bottom: 12px;
+    }
+
+    .exp-featured-top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 16px;
+    }
+
+    .exp-featured-name { font-size: 1.05rem; font-weight: 700; }
+    .exp-featured-role { font-size: 0.78rem; opacity: 0.5; margin-top: 4px; }
+    .exp-featured-period { font-size: 0.72rem; opacity: 0.3; white-space: nowrap; }
+
+    .exp-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 20px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .exp-stat-num { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; }
+    .exp-stat-label { font-size: 0.62rem; opacity: 0.35; margin-top: 4px; letter-spacing: 0.05em; }
+
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .exp-bullets li {
+      font-size: 0.78rem; opacity: 0.6; line-height: 1.6; padding-left: 14px; position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '·'; position: absolute; left: 0; opacity: 0.5;
+    }
+
+    /* Accordion items */
+    .exp-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 32px; }
+
+    .acc-item {
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; overflow: hidden;
+    }
+
+    .acc-trigger {
+      width: 100%; display: flex; justify-content: space-between;
+      align-items: center; padding: 16px 20px;
+      background: none; border: none; color: #fff;
+      font-family: inherit; cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .acc-trigger:hover { background: rgba(255,255,255,0.03); }
+
+    .acc-trigger-left { display: flex; flex-direction: column; gap: 3px; }
+    .acc-trigger-name { font-size: 0.9rem; font-weight: 700; }
+    .acc-trigger-role { font-size: 0.72rem; opacity: 0.4; }
+
+    .acc-trigger-right { display: flex; align-items: center; gap: 16px; }
+    .acc-period { font-size: 0.7rem; opacity: 0.3; white-space: nowrap; }
+
+    .acc-arrow {
+      font-size: 0.7rem; opacity: 0.4;
+      transition: transform 0.25s ease;
+      display: inline-block;
+    }
+
+    .acc-item.open .acc-arrow { transform: rotate(180deg); }
+
+    .acc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .acc-item.open .acc-body { max-height: 600px; }
+
+    .acc-body-inner {
+      padding: 0 20px 20px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .acc-body-inner .exp-bullets { margin-top: 16px; }
+
+    .contact-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .contact-btn {
+      color: #fff; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 10px 18px; border-radius: 8px;
+      font-size: 0.78rem; font-family: inherit;
+      transition: border-color 0.18s, background 0.18s;
+    }
+
+    .contact-btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+    /* ── Video embeds ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px; margin-bottom: 40px;
+    }
+
+    .video-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .video-label { font-size: 0.68rem; opacity: 0.4; letter-spacing: 0.04em; }
+
+    .video-frame-wrap {
+      position: relative; width: 100%; padding-bottom: 56.25%;
+      border-radius: 12px; overflow: hidden; background: #111;
+    }
+
+    .video-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+    /* ── Tweet embeds ── */
+    .tweets-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+    .tweets-row .twitter-tweet { margin: 0 !important; }
+
+    @media (max-width: 600px) {
+      header { padding: 24px 24px; }
+      .drawer-inner { padding: 0 24px 40px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .exp-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+  <div class="render"></div>
+  <div id="drag-layer"></div>
+
+  <!-- Header — Work / Features / About only -->
+  <header>
+    <div class="hero-text">
+      <h1>Luvnit Sawhney</h1>
+      <p>Head of Design at Amazon Pay &middot; L7</p>
+    </div>
+    <nav>
+      <a onclick="openDrawer('work')">Work</a>
+      <a onclick="openDrawer('features')">Features</a>
+      <a onclick="openDrawer('about')">About</a>
+    </nav>
+  </header>
+
+  <div class="overlay" id="overlay" onclick="closeAllDrawers()"></div>
+
+  <!-- ── Work Drawer ── -->
+  <div class="drawer" id="drawer-work">
+    <div class="drawer-handle"></div>
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <span class="drawer-title">Work</span>
+        <button class="drawer-close" onclick="closeAllDrawers()">close ✕</button>
+      </div>
+
+      <p class="section-label">Selected case studies</p>
+      <div class="card-grid">
+        <a class="card" href="https://freo.money" target="_blank" rel="noopener">
+          <div class="card-title">Freo</div>
+          <div class="card-desc">India's first credit-led Neobank. 0→1 product design. 10M→20M installs, 100K DAUs, $2M monthly disbursals.</div>
+          <div class="card-link">freo.money ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/Introducing-Dynamic-Widgets-102f7e77aeaa808784bbc52bcb0f1a85" target="_blank" rel="noopener">
+          <div class="card-title">Dynamic Widgets</div>
+          <div class="card-desc">Modular widget system — non-engineers compose product surfaces without code.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/Introducing-Dynamic-Layouts-102f7e77aeaa80a291dec7af0317e944" target="_blank" rel="noopener">
+          <div class="card-title">Dynamic Layouts</div>
+          <div class="card-desc">Server-driven UI layout engine. Cut time-to-market 30%.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/Engaging-users-to-drive-up-conversion-520e7bd3cf5349b196d354190b2a118d" target="_blank" rel="noopener">
+          <div class="card-title">Conversion Design</div>
+          <div class="card-desc">Heatmaps + session replay → funnel lift. UX writing lifted conversions 25%.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/One-app-product-philosophy-57a758fb9a9449e7bedaf193b2d73e92" target="_blank" rel="noopener">
+          <div class="card-title">One App Philosophy</div>
+          <div class="card-desc">Super-app consolidation strategy — IA, navigation, multi-product structure.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/Freo-FTUX-10bf7e77aeaa80d2b8f3d50fceabc796" target="_blank" rel="noopener">
+          <div class="card-title">Freo FTUX</div>
+          <div class="card-desc">First-time user experience redesign. KYC drop-off reduction. App Store rating 3.9→4.4.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+        <a class="card" href="https://wry-screw-af3.notion.site/Freo-app-architecture-2628a1072c53454480ecb6d4b937feb6" target="_blank" rel="noopener">
+          <div class="card-title">App Architecture</div>
+          <div class="card-desc">IA overhaul, navigation system, and multi-product structure for scale.</div>
+          <div class="card-link">notion ↗</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Features Drawer ── -->
+  <div class="drawer" id="drawer-features">
+    <div class="drawer-handle"></div>
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <span class="drawer-title">Features</span>
+        <button class="drawer-close" onclick="closeAllDrawers()">close ✕</button>
+      </div>
+
+      <p class="section-label">AI tools built</p>
+      <div class="card-grid">
+        <a class="card" href="https://massive.ink" target="_blank" rel="noopener">
+          <div class="card-title">Massive.ink</div>
+          <div class="card-desc">KRINK-inspired graffiti tool with real drip physics. Went viral.</div>
+          <div class="card-link">massive.ink ↗</div>
+        </a>
+        <a class="card" href="https://trywav.com" target="_blank" rel="noopener">
+          <div class="card-title">Wav</div>
+          <div class="card-desc">Control media with hand gestures. Camera-based interaction layer.</div>
+          <div class="card-link">trywav.com ↗</div>
+        </a>
+        <a class="card" href="https://x.com/zoink/status/1991237266669232478" target="_blank" rel="noopener">
+          <div class="card-title">Holographic Figma Interaction</div>
+          <div class="card-desc">Vibe-coded prototype retweeted by Dylan Field, CEO of Figma.</div>
+          <div class="card-link">x.com/zoink ↗</div>
+        </a>
+        <a class="card" href="https://x.com/Luvnits/status/2029302705223873011" target="_blank" rel="noopener">
+          <div class="card-title">Latest AI Build</div>
+          <div class="card-desc">Newest experiment in AI-driven design tools.</div>
+          <div class="card-link">x.com ↗</div>
+        </a>
+      </div>
+
+      <p class="section-label">Press & features</p>
+      <div class="video-grid">
+        <div class="video-wrap">
+          <div class="video-label">Massive.ink — YouTube feature</div>
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube.com/embed/R8imeWfBn84?si=uE0vMcGa1v5GhFzf&start=635" title="Massive.ink YouTube feature" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-wrap">
+          <div class="video-label">Guest lecture — Mesa School of Business</div>
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube.com/embed/sx1ApP0WjhQ" title="Guest lecture Mesa School of Business" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label">From the feed</p>
+      <div class="tweets-row">
+        <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+          <a href="https://x.com/Luvnits/status/1995567234203467981"></a>
+        </blockquote>
+        <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+          <a href="https://x.com/zoink/status/1991237266669232478"></a>
+        </blockquote>
+        <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+          <a href="https://x.com/Luvnits/status/2029302705223873011"></a>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── About Drawer ── -->
+  <div class="drawer" id="drawer-about">
+    <div class="drawer-handle"></div>
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <span class="drawer-title">About</span>
+        <button class="drawer-close" onclick="closeAllDrawers()">close ✕</button>
+      </div>
+
+      <div class="about-body">
+        <p class="about-lead">
+          Head of Design at Amazon Pay (L7). 12 years turning hard product problems into things people love — at scale, across fintech, payments, and consumer apps. Serial entrepreneur. Designer who ships.
+        </p>
+
+        <!-- Amazon Pay — expanded, prominent -->
+        <p class="section-label">Experience</p>
+
+        <div class="exp-featured">
+          <div class="exp-featured-top">
+            <div>
+              <div class="exp-featured-name">Amazon Pay India</div>
+              <div class="exp-featured-role">Head of Design &middot; L7</div>
+            </div>
+            <div class="exp-featured-period">2023 – Present</div>
+          </div>
+
+          <div class="exp-stats">
+            <div>
+              <div class="exp-stat-num">110M+</div>
+              <div class="exp-stat-label">UPI registered users</div>
+            </div>
+            <div>
+              <div class="exp-stat-num">10M+</div>
+              <div class="exp-stat-label">Pay Later users</div>
+            </div>
+            <div>
+              <div class="exp-stat-num">6M+</div>
+              <div class="exp-stat-label">ICICI credit card customers</div>
+            </div>
+          </div>
+
+          <ul class="exp-bullets">
+            <li>Crafting the future of payments for millions across India — leading design across UPI, lending, credit cards, travel, bills, and insurance.</li>
+            <li>Scaling design teams, processes, and systems across all high-frequency consumer and merchant surfaces.</li>
+            <li>Driving design strategy at an executive level, partnering with product, engineering, and business leadership.</li>
+            <li>Building design culture and mentoring a multi-disciplinary team across UX research, product design, and content design.</li>
+          </ul>
+        </div>
+
+        <!-- Accordion for earlier roles -->
+        <div class="exp-list">
+
+          <div class="acc-item" id="acc-freo">
+            <button class="acc-trigger" onclick="toggleAcc('freo')">
+              <div class="acc-trigger-left">
+                <span class="acc-trigger-name">Freo</span>
+                <span class="acc-trigger-role">Director of Product Design &middot; Sequoia / RTP Global</span>
+              </div>
+              <div class="acc-trigger-right">
+                <span class="acc-period">2020 – 2023</span>
+                <span class="acc-arrow">▼</span>
+              </div>
+            </button>
+            <div class="acc-body">
+              <div class="acc-body-inner">
+                <ul class="exp-bullets">
+                  <li>Led design for India's first credit-led neobank, from 0 to 1 and beyond.</li>
+                  <li>BNPL app scaled to 2M+ installs, 100K DAUs, $2M in monthly disbursals.</li>
+                  <li>Credit app grew from 10M to 20M installs under my design leadership.</li>
+                  <li>App Store rating improved from 3.9 to 4.4 through systematic UX improvements.</li>
+                  <li>Launched across 85+ cities in 7 languages — designed for Bharat, not just metros.</li>
+                  <li>Built and scaled a design system that cut time-to-market by 30%.</li>
+                  <li>UX writing and content strategy lifted conversion rates by 25%.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="acc-item" id="acc-hnak">
+            <button class="acc-trigger" onclick="toggleAcc('hnak')">
+              <div class="acc-trigger-left">
+                <span class="acc-trigger-name">HNAK</span>
+                <span class="acc-trigger-role">Product Design Lead &middot; 190+ stores, Middle East</span>
+              </div>
+              <div class="acc-trigger-right">
+                <span class="acc-period">2018 – 2020</span>
+                <span class="acc-arrow">▼</span>
+              </div>
+            </button>
+            <div class="acc-body">
+              <div class="acc-body-inner">
+                <ul class="exp-bullets">
+                  <li>First design hire at one of the Middle East's largest fashion retailers (190+ stores).</li>
+                  <li>Built the entire mobile and web shopping experience from zero — information architecture, design system, checkout flows.</li>
+                  <li>Established design process and tooling across a cross-functional team spread across multiple countries.</li>
+                  <li>Defined the visual language and UX patterns used across all digital surfaces.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="acc-item" id="acc-hotsauce">
+            <button class="acc-trigger" onclick="toggleAcc('hotsauce')">
+              <div class="acc-trigger-left">
+                <span class="acc-trigger-name">Hotsauce</span>
+                <span class="acc-trigger-role">CDO &amp; Co-founder</span>
+              </div>
+              <div class="acc-trigger-right">
+                <span class="acc-period">2016 – 2018</span>
+                <span class="acc-arrow">▼</span>
+              </div>
+            </button>
+            <div class="acc-body">
+              <div class="acc-body-inner">
+                <ul class="exp-bullets">
+                  <li>Co-founded a QR-based restaurant ordering app — designed, built, and shipped end-to-end.</li>
+                  <li>Owned product, design, sales, and investor relations as Chief Design Officer.</li>
+                  <li>Conceptualised the core ordering experience and menu management system for restaurant partners.</li>
+                  <li>Pitched to and engaged with early-stage investors; built the go-to-market strategy.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="section-label" style="margin-bottom: 16px;">Get in touch</p>
+        <div class="contact-row">
+          <a class="contact-btn" href="mailto:Luvnitsawhney@gmail.com">Email ↗</a>
+          <a class="contact-btn" href="https://linkedin.com/in/luvnit" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="contact-btn" href="https://x.com/Luvnits" target="_blank" rel="noopener">X ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+
+  <script>
+    function openDrawer(name) {
+      closeAllDrawers(false);
+      document.getElementById('drawer-' + name).classList.add('open');
+      document.getElementById('overlay').classList.add('active');
+    }
+
+    function closeAllDrawers(restoreScroll = true) {
+      document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+      document.getElementById('overlay').classList.remove('active');
+    }
+
+    function toggleAcc(id) {
+      const item = document.getElementById('acc-' + id);
+      item.classList.toggle('open');
+    }
+
+    // Swipe down to close drawer
+    let touchStartY = 0;
+    document.querySelectorAll('.drawer').forEach(drawer => {
+      drawer.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+      drawer.addEventListener('touchend', e => {
+        if (e.changedTouches[0].clientY - touchStartY > 80) closeAllDrawers();
+      }, { passive: true });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
