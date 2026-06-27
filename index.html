@@ -20,12 +20,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
   <style>
-    :root { --cell-size: 8px; --accent: #004EF7; }
+    :root { --cell-size: 8px; --bg: #004EF7; --bg-drawer: #0040CC; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
     body {
-      background: #000;
+      background: var(--bg);
       color: #fff;
       font-family: "Geist Mono", ui-monospace, "Courier New", monospace;
       overflow: hidden;
@@ -93,12 +93,12 @@
       display: block; padding: 2px 0;
     }
 
-    nav a:hover { opacity: 1; color: var(--accent); }
+    nav a:hover { opacity: 1; }
 
     /* ── Overlay ── */
     .overlay {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,30,160,0.65);
       backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
       z-index: 30; opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
@@ -109,7 +109,7 @@
     /* ── Bottom Sheet Drawer ── */
     .drawer {
       position: fixed; bottom: -100%; left: 0; right: 0;
-      background: #0d0d0d;
+      background: var(--bg-drawer);
       border-top: 1px solid rgba(255,255,255,0.08);
       border-radius: 20px 20px 0 0;
       z-index: 40;
@@ -124,7 +124,7 @@
 
     .drawer-handle {
       width: 36px; height: 4px;
-      background: var(--accent);
+      background: rgba(255,255,255,0.4);
       border-radius: 2px; margin: 14px auto 0;
     }
 
@@ -164,7 +164,7 @@
       text-decoration: none; color: #fff; display: block;
     }
 
-    .card:hover { border-color: var(--accent); background: rgba(0,78,247,0.06); }
+    .card:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }
 
     .card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
     .card-desc { font-size: 0.75rem; opacity: 0.5; line-height: 1.6; }
@@ -180,7 +180,7 @@
 
     /* Amazon Pay featured block */
     .exp-featured {
-      border: 1px solid var(--accent);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 14px; padding: 24px 28px;
       margin-bottom: 12px;
     }
@@ -273,7 +273,7 @@
       transition: border-color 0.18s, background 0.18s;
     }
 
-    .contact-btn:hover { border-color: var(--accent); background: rgba(0,78,247,0.06); }
+    .contact-btn:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
 
     /* ── Video embeds ── */
     .video-grid {
@@ -287,7 +287,7 @@
 
     .video-frame-wrap {
       position: relative; width: 100%; padding-bottom: 56.25%;
-      border-radius: 12px; overflow: hidden; background: #111;
+      border-radius: 12px; overflow: hidden; background: #0033BB;
     }
 
     .video-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
