@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
   <style>
-    :root { --cell-size: 8px; }
+    :root { --cell-size: 8px; --accent: #004EF7; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
@@ -93,7 +93,7 @@
       display: block; padding: 2px 0;
     }
 
-    nav a:hover { opacity: 1; }
+    nav a:hover { opacity: 1; color: var(--accent); }
 
     /* ── Overlay ── */
     .overlay {
@@ -124,7 +124,7 @@
 
     .drawer-handle {
       width: 36px; height: 4px;
-      background: rgba(255,255,255,0.2);
+      background: var(--accent);
       border-radius: 2px; margin: 14px auto 0;
     }
 
@@ -164,7 +164,7 @@
       text-decoration: none; color: #fff; display: block;
     }
 
-    .card:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+    .card:hover { border-color: var(--accent); background: rgba(0,78,247,0.06); }
 
     .card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
     .card-desc { font-size: 0.75rem; opacity: 0.5; line-height: 1.6; }
@@ -180,7 +180,7 @@
 
     /* Amazon Pay featured block */
     .exp-featured {
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--accent);
       border-radius: 14px; padding: 24px 28px;
       margin-bottom: 12px;
     }
@@ -273,7 +273,7 @@
       transition: border-color 0.18s, background 0.18s;
     }
 
-    .contact-btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+    .contact-btn:hover { border-color: var(--accent); background: rgba(0,78,247,0.06); }
 
     /* ── Video embeds ── */
     .video-grid {
@@ -384,28 +384,26 @@
         <button class="drawer-close" onclick="closeAllDrawers()">close ✕</button>
       </div>
 
-      <p class="section-label">AI tools built</p>
-      <div class="card-grid">
-        <a class="card" href="https://massive.ink" target="_blank" rel="noopener">
-          <div class="card-title">Massive.ink</div>
-          <div class="card-desc">KRINK-inspired graffiti tool with real drip physics. Went viral.</div>
-          <div class="card-link">massive.ink ↗</div>
-        </a>
-        <a class="card" href="https://trywav.com" target="_blank" rel="noopener">
-          <div class="card-title">Wav</div>
-          <div class="card-desc">Control media with hand gestures. Camera-based interaction layer.</div>
-          <div class="card-link">trywav.com ↗</div>
-        </a>
-        <a class="card" href="https://x.com/zoink/status/1991237266669232478" target="_blank" rel="noopener">
-          <div class="card-title">Holographic Figma Interaction</div>
-          <div class="card-desc">Vibe-coded prototype retweeted by Dylan Field, CEO of Figma.</div>
-          <div class="card-link">x.com/zoink ↗</div>
-        </a>
-        <a class="card" href="https://x.com/Luvnits/status/2029302705223873011" target="_blank" rel="noopener">
-          <div class="card-title">Latest AI Build</div>
-          <div class="card-desc">Newest experiment in AI-driven design tools.</div>
-          <div class="card-link">x.com ↗</div>
-        </a>
+      <p class="section-label">Videos</p>
+      <div class="video-grid">
+        <div class="video-wrap">
+          <div class="video-label">Massive.ink — YouTube feature</div>
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube.com/embed/R8imeWfBn84?si=v2p6nCsj-FcU3xou" title="Massive.ink YouTube feature" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-wrap">
+          <div class="video-label">Guest lecture — Mesa School of Business</div>
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube.com/embed/sx1ApP0WjhQ" title="Guest lecture Mesa School of Business" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="video-wrap">
+          <div class="video-label">Featured video</div>
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube.com/embed/XFWUQu_ENgA?si=eoY_-25s8u9mCLZs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
 
       <p class="section-label">Press & writing</p>
@@ -432,26 +430,28 @@
         </a>
       </div>
 
-      <p class="section-label">Videos</p>
-      <div class="video-grid">
-        <div class="video-wrap">
-          <div class="video-label">Massive.ink — YouTube feature</div>
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube.com/embed/R8imeWfBn84?si=v2p6nCsj-FcU3xou" title="Massive.ink YouTube feature" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-wrap">
-          <div class="video-label">Guest lecture — Mesa School of Business</div>
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube.com/embed/sx1ApP0WjhQ" title="Guest lecture Mesa School of Business" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video-wrap">
-          <div class="video-label">Featured video</div>
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube.com/embed/XFWUQu_ENgA?si=eoY_-25s8u9mCLZs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-        </div>
+      <p class="section-label">AI tools built</p>
+      <div class="card-grid">
+        <a class="card" href="https://massive.ink" target="_blank" rel="noopener">
+          <div class="card-title">Massive.ink</div>
+          <div class="card-desc">KRINK-inspired graffiti tool with real drip physics. Went viral.</div>
+          <div class="card-link">massive.ink ↗</div>
+        </a>
+        <a class="card" href="https://trywav.com" target="_blank" rel="noopener">
+          <div class="card-title">Wav</div>
+          <div class="card-desc">Control media with hand gestures. Camera-based interaction layer.</div>
+          <div class="card-link">trywav.com ↗</div>
+        </a>
+        <a class="card" href="https://x.com/zoink/status/1991237266669232478" target="_blank" rel="noopener">
+          <div class="card-title">Holographic Figma Interaction</div>
+          <div class="card-desc">Vibe-coded prototype retweeted by Dylan Field, CEO of Figma.</div>
+          <div class="card-link">x.com/zoink ↗</div>
+        </a>
+        <a class="card" href="https://x.com/Luvnits/status/2029302705223873011" target="_blank" rel="noopener">
+          <div class="card-title">Latest AI Build</div>
+          <div class="card-desc">Newest experiment in AI-driven design tools.</div>
+          <div class="card-link">x.com ↗</div>
+        </a>
       </div>
 
       <p class="section-label">From the feed</p>
