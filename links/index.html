@@ -143,20 +143,26 @@
       position: relative; height: 128px;
       display: flex; align-items: flex-end;
       overflow: hidden;
+      background-size: cover; background-position: center;
     }
 
-    .app-banner.massive { background: var(--cobalt); }
-    .app-banner.wav { background: var(--midnight); }
+    .app-banner.massive { background-color: var(--cobalt); background-image: url('banner-massive.jpg'); }
+    .app-banner.wav { background-color: var(--midnight); background-image: url('banner-wav.jpg'); }
+
+    /* darken the bottom of the banner so the title stays readable over any photo */
+    .app-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.6) 100%);
+      z-index: 1;
+    }
 
     .app-banner-title {
       position: relative; z-index: 2;
-      padding: 0 20px 40px;
+      padding: 0 20px 16px;
       font-size: 1.5rem; font-weight: 800;
       letter-spacing: 0.01em; text-transform: uppercase;
       color: #fff;
     }
-
-    .app-banner .dither { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; z-index: 1; }
 
     .app-body { padding: 18px 20px 22px; }
     .app-title { font-size: 0.94rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
@@ -268,7 +274,6 @@
         <a class="app-card" href="https://massive.ink" target="_blank" rel="noopener">
           <div class="app-banner massive">
             <div class="app-banner-title">Massive<br>.ink</div>
-            <img class="dither" src="dither-blue.png" alt="" />
           </div>
           <div class="app-body">
             <div class="app-title">Massive.ink</div>
@@ -280,7 +285,6 @@
         <a class="app-card" href="https://trywav.com" target="_blank" rel="noopener">
           <div class="app-banner wav">
             <div class="app-banner-title">Wav</div>
-            <img class="dither" src="dither-dark.png" alt="" />
           </div>
           <div class="app-body">
             <div class="app-title">Wav</div>
