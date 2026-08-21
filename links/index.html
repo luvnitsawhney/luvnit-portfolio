@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Luvnit Sawhney — Links</title>
+  <meta name="description" content="Luvnit Sawhney — Design leader, builder. All links in one place." />
+  <meta property="og:title" content="Luvnit Sawhney — Links" />
+  <meta property="og:description" content="Socials, apps, and everything else — in one place." />
+  <meta property="og:image" content="https://luvnit.co/og.png" />
+  <meta property="og:url" content="https://luvnit.co/links" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Luvnit Sawhney — Links" />
+  <meta name="twitter:image" content="https://luvnit.co/og.png" />
+  <meta name="twitter:site" content="@Luvnits" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #004EF7; --bg-soft: #0040CC; --line: rgba(255,255,255,0.1); }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+    html, body {
+      background: var(--bg);
+      color: #fff;
+      font-family: "Geist Mono", ui-monospace, "Courier New", monospace;
+      min-height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 64px 20px 80px;
+    }
+
+    main { width: 100%; max-width: 480px; }
+
+    /* ── Profile header ── */
+    .profile { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 44px; }
+
+    .avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: var(--bg-soft);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 18px; overflow: hidden;
+    }
+
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .profile-name {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em;
+    }
+
+    .profile-name svg { flex: none; }
+
+    .profile-tagline {
+      font-size: 0.8rem; opacity: 0.55; margin-top: 8px; letter-spacing: 0.01em;
+    }
+
+    .icon-row { display: flex; gap: 10px; margin-top: 20px; }
+
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.14);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; text-decoration: none;
+      transition: border-color 0.18s, background 0.18s;
+    }
+
+    .icon-btn:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }
+    .icon-btn svg { width: 17px; height: 17px; }
+
+    /* ── Section labels ── */
+    .section { margin-bottom: 36px; }
+
+    .section-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.68rem; opacity: 0.4;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-label .dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex: none;
+    }
+
+    .section-label .dot svg { width: 11px; height: 11px; }
+
+    /* ── Link cards ── */
+    .link-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .link-card {
+      display: flex; align-items: center; gap: 14px;
+      border: 1px solid var(--line); border-radius: 14px;
+      padding: 16px 18px;
+      text-decoration: none; color: #fff;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+    }
+
+    .link-card:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+
+    .link-icon {
+      width: 34px; height: 34px; border-radius: 9px; flex: none;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .link-icon svg { width: 16px; height: 16px; }
+
+    .link-body { flex: 1; min-width: 0; }
+    .link-title { font-size: 0.88rem; font-weight: 700; letter-spacing: -0.01em; }
+    .link-sub { font-size: 0.72rem; opacity: 0.45; margin-top: 2px; }
+    .link-arrow { font-size: 0.8rem; opacity: 0.3; flex: none; }
+
+    /* ── App cards (bigger, featured) ── */
+    .app-card {
+      display: block; text-decoration: none; color: #fff;
+      border: 1px solid var(--line); border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+      margin-bottom: 12px;
+    }
+
+    .app-card:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+
+    .app-banner {
+      height: 88px;
+      display: flex; align-items: center; padding: 0 22px;
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em;
+      position: relative; overflow: hidden;
+    }
+
+    .app-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 14px);
+      pointer-events: none;
+    }
+
+    .app-banner.massive { background: var(--bg-soft); }
+    .app-banner.wav { background: #001A57; }
+
+    .app-body { padding: 16px 22px 20px; }
+    .app-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .app-desc { font-size: 0.76rem; opacity: 0.5; line-height: 1.55; margin-bottom: 14px; }
+
+    .app-cta {
+      display: inline-block;
+      background: #fff; color: var(--bg);
+      font-family: inherit; font-size: 0.72rem; font-weight: 700;
+      padding: 9px 16px; border-radius: 100px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; margin-top: 24px;
+      font-size: 0.68rem; opacity: 0.3; letter-spacing: 0.04em;
+    }
+
+    footer a { color: #fff; text-decoration: none; opacity: 0.8; }
+    footer a:hover { opacity: 1; }
+
+    @media (max-width: 420px) {
+      body { padding: 48px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+
+    <div class="profile">
+      <div class="avatar">LS</div>
+      <div class="profile-name">
+        Luvnit Sawhney
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2l2.4 1.4 2.7-.6 1.4 2.4 2.4 1.4-.6 2.7.6 2.7-2.4 1.4-1.4 2.4-2.7-.6L12 15.4l-2.4 1.4-2.7-.6-1.4-2.4-2.4-1.4.6-2.7-.6-2.7 2.4-1.4L4.9 2.8l2.7.6z" fill="#fff" opacity="0.9"/><path d="M9.8 12.4l1.7 1.7 3.4-4.2" stroke="var(--bg)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="profile-tagline">Design leader · building at the edge of AI</p>
+
+      <div class="icon-row">
+        <a class="icon-btn" href="https://instagram.com/iluvnit" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="#fff" stroke="none"/></svg>
+        </a>
+        <a class="icon-btn" href="https://x.com/Luvnits" target="_blank" rel="noopener" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M3 3l7.5 9.3L3.3 21h2.4l6.1-7.2L16.8 21H21l-7.9-9.8L20.3 3h-2.4l-5.6 6.6L8.2 3z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://linkedin.com/in/luvnit" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4z"/></svg>
+        </a>
+        <a class="icon-btn" href="mailto:Luvnitsawhney@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">
+        <span class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 15L15 9M10.5 6.5l1-1a3.5 3.5 0 015 5l-1 1M13.5 17.5l-1 1a3.5 3.5 0 01-5-5l1-1"/></svg>
+        </span>
+        socials
+      </div>
+      <div class="link-list">
+
+        <a class="link-card" href="https://instagram.com/iluvnit" target="_blank" rel="noopener">
+          <span class="link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="#fff" stroke="none"/></svg>
+          </span>
+          <span class="link-body">
+            <span class="link-title">Instagram</span>
+            <span class="link-sub">@iluvnit</span>
+          </span>
+          <span class="link-arrow">↗</span>
+        </a>
+
+        <a class="link-card" href="https://x.com/Luvnits" target="_blank" rel="noopener">
+          <span class="link-icon">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M3 3l7.5 9.3L3.3 21h2.4l6.1-7.2L16.8 21H21l-7.9-9.8L20.3 3h-2.4l-5.6 6.6L8.2 3z"/></svg>
+          </span>
+          <span class="link-body">
+            <span class="link-title">X</span>
+            <span class="link-sub">@Luvnits</span>
+          </span>
+          <span class="link-arrow">↗</span>
+        </a>
+
+        <a class="link-card" href="https://linkedin.com/in/luvnit" target="_blank" rel="noopener">
+          <span class="link-icon">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4z"/></svg>
+          </span>
+          <span class="link-body">
+            <span class="link-title">LinkedIn</span>
+            <span class="link-sub">in/luvnit</span>
+          </span>
+          <span class="link-arrow">↗</span>
+        </a>
+
+        <a class="link-card" href="https://luvnit.co">
+          <span class="link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-6-3.8-9s1.3-6.4 3.8-9z"/></svg>
+          </span>
+          <span class="link-body">
+            <span class="link-title">Personal site</span>
+            <span class="link-sub">luvnit.co</span>
+          </span>
+          <span class="link-arrow">↗</span>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">
+        <span class="dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="17.2" r="0.6" fill="#fff" stroke="none"/></svg>
+        </span>
+        my apps
+      </div>
+
+      <a class="app-card" href="https://massive.ink" target="_blank" rel="noopener">
+        <div class="app-banner massive">massive.ink</div>
+        <div class="app-body">
+          <div class="app-title">Massive.ink</div>
+          <div class="app-desc">KRINK-inspired graffiti tool with real drip physics. Went viral.</div>
+          <span class="app-cta">Try it →</span>
+        </div>
+      </a>
+
+      <a class="app-card" href="https://trywav.com" target="_blank" rel="noopener">
+        <div class="app-banner wav">wav</div>
+        <div class="app-body">
+          <div class="app-title">Wav</div>
+          <div class="app-desc">Control media with hand gestures. A camera-based interaction layer.</div>
+          <span class="app-cta">Try it →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <footer>
+      <a href="https://luvnit.co">luvnit.co</a>
+    </footer>
+
+  </main>
+</body>
+</html>
