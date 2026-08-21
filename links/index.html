@@ -90,9 +90,9 @@
 
     /* ── Pixel-dither divider ── */
     .dither {
-      display: block; width: 100%; height: 56px;
+      display: block; width: 100%; height: auto;
+      aspect-ratio: 48 / 14;   /* matches the source pixel grid so cells stay square */
       image-rendering: pixelated; image-rendering: crisp-edges;
-      object-fit: fill;
     }
 
     /* ── Body ── */
